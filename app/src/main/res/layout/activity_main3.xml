@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity3">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/game"-->
+<!--        android:layout_width="878dp"-->
+<!--        android:layout_height="1396dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.284"-->
+<!--        app:srcCompat="@drawable/game1" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/vozvr"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="65.6dp"-->
+<!--        android:backgroundTint="#DCDCDC"-->
+<!--        android:gravity="top|center"-->
+<!--        android:onClick="toMoon"-->
+<!--        android:text="X"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="35sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.978"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.004" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="270dp"-->
+<!--        android:layout_height="138.5dp"-->
+<!--        android:backgroundTint="#EEEEEE"-->
+<!--        android:text="НАКОРМИТЬ"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:strokeColor="@color/black"-->
+<!--        app:strokeWidth="5dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button2"-->
+<!--        android:layout_width="270dp"-->
+<!--        android:layout_height="138.5dp"-->
+<!--        android:backgroundTint="#EEEEEE"-->
+<!--        android:text="РАЗВЛЕЧЬ"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:strokeColor="@color/black"-->
+<!--        app:strokeWidth="5dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button3"-->
+<!--        android:layout_width="270dp"-->
+<!--        android:layout_height="138.5dp"-->
+<!--        android:backgroundTint="#EEEEEE"-->
+<!--        android:text="СПАТЬ"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:strokeColor="@color/black"-->
+<!--        app:strokeWidth="5dp" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
