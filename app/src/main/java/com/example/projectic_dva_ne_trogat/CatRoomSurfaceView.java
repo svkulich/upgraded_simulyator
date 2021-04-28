@@ -12,7 +12,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileOutputStream;
+
 import androidx.annotation.NonNull;
+
 
 public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -25,6 +30,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     float xg = 0; //голод
     float xn = 0; //настроение
     float xu = 0; //усталость
+
 
     private DrawThread drawThread;
 
@@ -73,6 +79,14 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                 vUst = (float)-0.1;
             }
             else if(x > (int)(canvas.getWidth() * 0.91) && x < (int)(canvas.getWidth() * 0.96) && y > (int)(canvas.getHeight() * 0.01) && y < (int)canvas.getHeight() * 0.05){
+                String xxx = "" + xg;
+                try{
+                    FileOutputStream sost = new FileOutputStream("./test.txt");
+                    sost.write(xxx.getBytes());
+                    sost.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 System.exit(0);
             }
         }
@@ -112,7 +126,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
             Paint tooxt = new Paint();  tooxt.setColor(Color.BLACK);    tooxt.setTextSize(40);  tooxt.setStrokeWidth(20);
             Paint backTOback = new Paint(); backTOback.setColor(Color.BLACK);   backTOback.setStrokeWidth(100); backTOback.setTextSize(90);
             Bitmap window = BitmapFactory.decodeResource(getResources(), R.drawable.window);
-            Paint forStatus = new Paint(); forStatus.setColor(Color.GREEN); forStatus.setStyle(Paint.Style.FILL); forStatus.setStrokeWidth(7);
+            Bitmap feedme = BitmapFactory.decodeResource(getResources(), R.drawable.feedme);
+            Bitmap playWme = BitmapFactory.decodeResource(getResources(), R.drawable.playwme);
+            Bitmap wannaSleep = BitmapFactory.decodeResource(getResources(), R.drawable.wannasleep);
+            Paint forStatusHungry = new Paint(); forStatusHungry.setColor(Color.GREEN); forStatusHungry.setStyle(Paint.Style.FILL); forStatusHungry.setStrokeWidth(7); //цвет для состояния голода
+            Paint forStatusMood = new Paint(); forStatusMood.setColor(Color.GREEN); forStatusMood.setStyle(Paint.Style.FILL); forStatusMood.setStrokeWidth(7); //цвет для состояния настроения
+            Paint forStatusTiredness = new Paint(); forStatusTiredness.setColor(Color.GREEN); forStatusTiredness.setStyle(Paint.Style.FILL); forStatusTiredness.setStrokeWidth(7); //цвет для состояния усталости
 
             boolean running = true;
             while (running) {
@@ -126,23 +145,36 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         float widthRect = (float)(canvas.getWidth() * 0.331) - xg;
                         if(widthRect > 0 && vUst > 0) xg = xg + vx;
                         else xg = (float)(xg + (vx * 0.01));
-                        canvas.drawRect(0, (float) (canvas.getHeight() * 0.06), widthRect, (float) (canvas.getHeight() * 0.11), forStatus);  //отрисовка уровня состояния голода
+                        if(xg > 0 && xg < (float)(canvas.getWidth() * 0.18)) forStatusHungry.setColor(Color.GREEN);
+                        else if(xg > (float)(canvas.getWidth() * 0.18) && xg < (float)(canvas.getWidth() * 0.3)) forStatusHungry.setColor(Color.YELLOW);
+                        else forStatusHungry.setColor(Color.RED);
+                        canvas.drawRect(0, (float) (canvas.getHeight() * 0.06), widthRect, (float) (canvas.getHeight() * 0.11), forStatusHungry); //отрисовка уровня состояния голода
 
                         float widthRect2 = (float)(canvas.getWidth() * 0.661) - xn;
                         if(widthRect2 > (float)(canvas.getWidth() * 0.331) && vUst > 0) xn = xn + vx;
-                        else xn = (float)(xn + (vx * 0.01));
-                        canvas.drawRect((float)(canvas.getWidth() * 0.332), (float) (canvas.getHeight() * 0.06), widthRect2, (float) (canvas.getHeight() * 0.11), forStatus); //отрисовка уровня состояния настроения
+                        else if (xn < 0) xn = (float) (xn + (vx * 0.01));
+                        if(xn > 0 && xn < (float)(canvas.getWidth() * 0.18)) forStatusMood.setColor(Color.GREEN);
+                        else if(xn > (float)(canvas.getWidth() * 0.18) && xn < (float)(canvas.getWidth() * 0.3)) forStatusMood.setColor(Color.YELLOW);
+                        else forStatusMood.setColor(Color.RED);
+                        canvas.drawRect((float)(canvas.getWidth() * 0.332), (float) (canvas.getHeight() * 0.06), widthRect2, (float) (canvas.getHeight() * 0.11), forStatusMood); //отрисовка уровня состояния настроения
 
                         float widthRect3 = (float)(canvas.getWidth()) - xu;
                         if(widthRect3 > (float)(canvas.getWidth() * 0.661) || vUst < 0) xu = xu + vUst;
                         if(xu < 0) vUst = (float)0.1;
-                        canvas.drawRect((float)(canvas.getWidth() * 0.662), (float) (canvas.getHeight() * 0.06), widthRect3, (float) (canvas.getHeight() * 0.11), forStatus); //отрисовка уровня состояния усталости
+                        if(xu > 0 && xu < (float)(canvas.getWidth() * 0.18)) forStatusTiredness.setColor(Color.GREEN);
+                        else if(xu > (float)(canvas.getWidth() * 0.18) && xu < (float)(canvas.getWidth() * 0.3)) forStatusTiredness.setColor(Color.YELLOW);
+                        else forStatusTiredness.setColor(Color.RED);
+                        canvas.drawRect((float)(canvas.getWidth() * 0.662), (float) (canvas.getHeight() * 0.06), widthRect3, (float) (canvas.getHeight() * 0.11), forStatusTiredness); //отрисовка уровня состояния усталости
 
                         canvas.drawLine(0, (float)(canvas.getHeight() * 0.06), canvas.getWidth(), (float)(canvas.getHeight() * 0.06), palki);
                         canvas.drawRect(0, (int)(canvas.getWidth() * 1.07), canvas.getWidth(), canvas.getHeight(), floorPaint);
                         canvas.drawLine(0, (float)(canvas.getHeight() * 0.68), canvas.getWidth(), (float)(canvas.getHeight() * 0.68), palki);
                         canvas.drawBitmap(window, new Rect(0, 0, window.getWidth(), window.getHeight()),
                                 new Rect((int)(canvas.getWidth() * 0.02), (int)(canvas.getHeight() * 0.15), (int)(canvas.getWidth() * 0.225), (int)(canvas.getHeight() * 0.35)), wallPaint);
+
+                        canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
+                                new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба питоомца
+
                         canvas.drawLine(0, (float)(canvas.getHeight() * 0.11), canvas.getWidth(), (float)(canvas.getHeight() * 0.11), palki);
                         canvas.drawLine((int)(canvas.getWidth() * 0.331), (float)(canvas.getHeight() * 0.06), (int)(canvas.getWidth() * 0.331), (float)(canvas.getHeight() * 0.11), palki);
                         canvas.drawLine((int)(canvas.getWidth() * 0.661), (float)(canvas.getHeight() * 0.06), (int)(canvas.getWidth() * 0.661), (float)(canvas.getHeight() * 0.11), palki);
