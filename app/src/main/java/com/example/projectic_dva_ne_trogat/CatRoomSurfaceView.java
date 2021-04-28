@@ -7,13 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.FileOutputStream;
 
 import androidx.annotation.NonNull;
@@ -128,7 +125,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
             Bitmap window = BitmapFactory.decodeResource(getResources(), R.drawable.window);
             Bitmap feedme = BitmapFactory.decodeResource(getResources(), R.drawable.feedme);
             Bitmap playWme = BitmapFactory.decodeResource(getResources(), R.drawable.playwme);
-            Bitmap wannaSleep = BitmapFactory.decodeResource(getResources(), R.drawable.wannasleep);
+            Bitmap wannaSleep = BitmapFactory.decodeResource(getResources(), R.drawable.needsomesleep);
             Paint forStatusHungry = new Paint(); forStatusHungry.setColor(Color.GREEN); forStatusHungry.setStyle(Paint.Style.FILL); forStatusHungry.setStrokeWidth(7); //цвет для состояния голода
             Paint forStatusMood = new Paint(); forStatusMood.setColor(Color.GREEN); forStatusMood.setStyle(Paint.Style.FILL); forStatusMood.setStrokeWidth(7); //цвет для состояния настроения
             Paint forStatusTiredness = new Paint(); forStatusTiredness.setColor(Color.GREEN); forStatusTiredness.setStyle(Paint.Style.FILL); forStatusTiredness.setStrokeWidth(7); //цвет для состояния усталости
@@ -146,7 +143,11 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         if(widthRect > 0 && vUst > 0) xg = xg + vx;
                         else xg = (float)(xg + (vx * 0.01));
                         if(xg > 0 && xg < (float)(canvas.getWidth() * 0.18)) forStatusHungry.setColor(Color.GREEN);
-                        else if(xg > (float)(canvas.getWidth() * 0.18) && xg < (float)(canvas.getWidth() * 0.3)) forStatusHungry.setColor(Color.YELLOW);
+                        else if(xg > (float)(canvas.getWidth() * 0.18) && xg < (float)(canvas.getWidth() * 0.3)){
+                            forStatusHungry.setColor(Color.YELLOW);
+                            canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
+                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба покормить питомца
+                        }
                         else forStatusHungry.setColor(Color.RED);
                         canvas.drawRect(0, (float) (canvas.getHeight() * 0.06), widthRect, (float) (canvas.getHeight() * 0.11), forStatusHungry); //отрисовка уровня состояния голода
 
@@ -154,7 +155,11 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         if(widthRect2 > (float)(canvas.getWidth() * 0.331) && vUst > 0) xn = xn + vx;
                         else if (xn < 0) xn = (float) (xn + (vx * 0.01));
                         if(xn > 0 && xn < (float)(canvas.getWidth() * 0.18)) forStatusMood.setColor(Color.GREEN);
-                        else if(xn > (float)(canvas.getWidth() * 0.18) && xn < (float)(canvas.getWidth() * 0.3)) forStatusMood.setColor(Color.YELLOW);
+                        else if(xn > (float)(canvas.getWidth() * 0.18) && xn < (float)(canvas.getWidth() * 0.3)){
+                            forStatusMood.setColor(Color.YELLOW);
+                            canvas.drawBitmap(playWme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
+                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба развлечь питомца
+                        }
                         else forStatusMood.setColor(Color.RED);
                         canvas.drawRect((float)(canvas.getWidth() * 0.332), (float) (canvas.getHeight() * 0.06), widthRect2, (float) (canvas.getHeight() * 0.11), forStatusMood); //отрисовка уровня состояния настроения
 
@@ -162,7 +167,11 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         if(widthRect3 > (float)(canvas.getWidth() * 0.661) || vUst < 0) xu = xu + vUst;
                         if(xu < 0) vUst = (float)0.1;
                         if(xu > 0 && xu < (float)(canvas.getWidth() * 0.18)) forStatusTiredness.setColor(Color.GREEN);
-                        else if(xu > (float)(canvas.getWidth() * 0.18) && xu < (float)(canvas.getWidth() * 0.3)) forStatusTiredness.setColor(Color.YELLOW);
+                        else if(xu > (float)(canvas.getWidth() * 0.18) && xu < (float)(canvas.getWidth() * 0.3)){
+                            forStatusTiredness.setColor(Color.YELLOW);
+                            canvas.drawBitmap(wannaSleep, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
+                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба положить питомца спать
+                        }
                         else forStatusTiredness.setColor(Color.RED);
                         canvas.drawRect((float)(canvas.getWidth() * 0.662), (float) (canvas.getHeight() * 0.06), widthRect3, (float) (canvas.getHeight() * 0.11), forStatusTiredness); //отрисовка уровня состояния усталости
 
@@ -171,18 +180,16 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         canvas.drawLine(0, (float)(canvas.getHeight() * 0.68), canvas.getWidth(), (float)(canvas.getHeight() * 0.68), palki);
                         canvas.drawBitmap(window, new Rect(0, 0, window.getWidth(), window.getHeight()),
                                 new Rect((int)(canvas.getWidth() * 0.02), (int)(canvas.getHeight() * 0.15), (int)(canvas.getWidth() * 0.225), (int)(canvas.getHeight() * 0.35)), wallPaint);
-
-                        canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба питоомца
-
+//                        canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
+//                                new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба покормить питомца
                         canvas.drawLine(0, (float)(canvas.getHeight() * 0.11), canvas.getWidth(), (float)(canvas.getHeight() * 0.11), palki);
                         canvas.drawLine((int)(canvas.getWidth() * 0.331), (float)(canvas.getHeight() * 0.06), (int)(canvas.getWidth() * 0.331), (float)(canvas.getHeight() * 0.11), palki);
                         canvas.drawLine((int)(canvas.getWidth() * 0.661), (float)(canvas.getHeight() * 0.06), (int)(canvas.getWidth() * 0.661), (float)(canvas.getHeight() * 0.11), palki);
                         canvas.drawRect((int)(canvas.getWidth() * 0.331), (int)(canvas.getHeight() * 0.01), (int)(canvas.getWidth() * 0.661), (int)(canvas.getHeight() * 0.05), facets);  //место таймера
                         canvas.drawRect(0, (int)(canvas.getHeight() * 0.85), canvas.getWidth(), canvas.getHeight(), ceilingPaint);
-                        canvas.drawRect(0, (int)(canvas.getHeight() * 0.85), (int)(canvas.getWidth() * 0.331), canvas.getHeight(), facets);  //первая  кнопка
-                        canvas.drawRect((int)(canvas.getWidth() * 0.331), (int)(canvas.getHeight() * 0.85), (int)(canvas.getWidth() * 0.661), canvas.getHeight(), facets);  //вторая кнопка
-                        canvas.drawRect((int)(canvas.getWidth() * 0.661), (int)(canvas.getHeight() * 0.85), canvas.getWidth(), canvas.getHeight(), facets);  //третья кнопка
+                        canvas.drawRect(0, (int)(canvas.getHeight() * 0.85), (int)(canvas.getWidth() * 0.331), canvas.getHeight(), facets);  //отрисовка первой кнопки
+                        canvas.drawRect((int)(canvas.getWidth() * 0.331), (int)(canvas.getHeight() * 0.85), (int)(canvas.getWidth() * 0.661), canvas.getHeight(), facets);  //отрисовка второй кнопки
+                        canvas.drawRect((int)(canvas.getWidth() * 0.661), (int)(canvas.getHeight() * 0.85), canvas.getWidth(), canvas.getHeight(), facets);  //отрисовка третьей кнопки
                         canvas.drawText("Накормить", (float)(canvas.getWidth() * 0.07), (float)(canvas.getHeight() * 0.935), tooxt);
                         canvas.drawText("Развлечь", (float)(canvas.getWidth() * 0.428), (float)(canvas.getHeight() * 0.935), tooxt);
                         canvas.drawText("Спать", (float)(canvas.getWidth() * 0.785), (float)(canvas.getHeight() * 0.935), tooxt);
