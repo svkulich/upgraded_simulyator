@@ -12,11 +12,12 @@ import java.util.concurrent.Flow;
 public class Sprite{
     private Bitmap bitmap;
     private ArrayList<ArrayList<Rect>> frames;
-    private int frameWidth = 90;
-    private int frameHeight = 90;
+    private int frameWidth = 110;
+    private int frameHeight = 200;
     private int currentFrameX = 0;
-    private int currentFrameY = 0;
-    private double frameTime = 0.1;
+    private int currentFrameY = 2;
+    private double frameTime = 0.4;
+    public int size = 300;
     private double timeForCurrentFrame = 0;
 
     private double x;
@@ -28,10 +29,11 @@ public class Sprite{
         this.y = y;
 
         frames = new ArrayList<>();
+        frameWidth = bitmap.getWidth() / 9;
+        frameHeight = bitmap.getHeight() / 3;
         for(int i = 0; i < 3; i++){
             frames.add(new ArrayList<>());
             for(int j = 0; j < 9; j++){
-                System.out.println(j * frameWidth + " " + i * frameHeight + " " +  (j + 1) * frameWidth + " " + (i + 1) * frameHeight);
                 frames.get(i).add(new Rect(j * frameWidth, i * frameHeight, (j + 1) * frameWidth, (i + 1) * frameHeight));
             }
         }
@@ -48,6 +50,7 @@ public class Sprite{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(bitmap, frames.get(currentFrameY).get(currentFrameX), new Rect(0 , 0, 100, 100), new Paint());
+        canvas.drawBitmap(bitmap, frames.get(currentFrameY).get(currentFrameX),
+                new Rect((int) x, (int) y, (int) x + size, (int) y + size), new Paint());
     }
 }

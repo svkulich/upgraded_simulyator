@@ -36,7 +36,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     public CatRoomSurfaceView(Context context) {
         super(context);
         getHolder().addCallback(this);
-        catSprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.nnidet), 0, 0);
+        catSprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.nnidet), 400, 400);
     }
 
 
