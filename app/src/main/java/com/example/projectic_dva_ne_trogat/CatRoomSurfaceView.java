@@ -104,7 +104,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
         @Override
         public void onTick(long millisUntilFinished) {
-            catSprite.update(1f * millisUntilFinished / 1000, 50); //последняя цифра отвечает за то, сколько спрайт будет двигатьтся, и в какую сторону
+            catSprite.update(1f * millisUntilFinished / 1000, 50); //последняя цифра отвечает за то, сколько спрайт будет двигатьтся, и в каком направлении
                                                                    // (если отрицательное значение, то справа налево,
                                                                    // если положительное значение, то слева направо)
         }
