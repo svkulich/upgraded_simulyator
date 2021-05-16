@@ -15,42 +15,55 @@ public class Sprite{
     private int frameWidth = 110;
     private int frameHeight = 200;
     private int currentFrameX = 0;
-    private int currentFrameY = 2;
-    private double frameTime = 0.4;
-    public int size = 300;
+    private int currentFrameY = 0; //линия анимации (0 - идёт вправо, 1 - только для смерти, 2 - идёт влево)
+    private double frameTime = 1;
+    public int size = 600;
     private double timeForCurrentFrame = 0;
 
     private double x;
     private double y;
 
-    public Sprite(Bitmap bitmap, double x, double y) {
+    private double velocityX;
+
+    public double getVX() {
+        return velocityX;
+    }
+
+    public void setVX(double velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    public Sprite(Bitmap bitmap, double x, double y, double velocityX) {
         this.bitmap = bitmap;
         this.x = x;
         this.y = y;
+        this.velocityX = velocityX;
 
         frames = new ArrayList<>();
-        frameWidth = bitmap.getWidth() / 9;
+        frameWidth = bitmap.getWidth() / 8;
         frameHeight = bitmap.getHeight() / 3;
         for(int i = 0; i < 3; i++){
             frames.add(new ArrayList<>());
-            for(int j = 0; j < 9; j++){
+            for(int j = 0; j < 8; j++){
                 frames.get(i).add(new Rect(j * frameWidth, i * frameHeight, (j + 1) * frameWidth, (i + 1) * frameHeight));
             }
         }
-        frames.get(1).remove(8);
         frames.get(1).remove(7);
+//        frames.get(1).remove(6);
     }
 
-    public void update(double deltaTime){
+    public void update(double deltaTime, int ms){
         timeForCurrentFrame += deltaTime;
+
         if (timeForCurrentFrame >= frameTime){
             currentFrameX = (currentFrameX + 1) % frames.get(currentFrameY).size();
             timeForCurrentFrame = 0;
         }
+        x = x + velocityX * ms/1000.0;
     }
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(bitmap, frames.get(currentFrameY).get(currentFrameX),
-                new Rect((int) x, (int) y, (int) x + size, (int) y + size), new Paint());
+                new Rect((int)x, (int)y, (int)x + size, (int)y + size), new Paint());
     }
 }

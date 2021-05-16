@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 
 public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
+    private static final long timerInterval = 100;
     float x;
     float y;
 
@@ -36,7 +38,10 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     public CatRoomSurfaceView(Context context) {
         super(context);
         getHolder().addCallback(this);
-        catSprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.nnidet), 400, 400);
+        catSprite = new Sprite(BitmapFactory.decodeResource(getResources(), R.drawable.nnidet4fu), 300, 850, 170); //обозначения цифр:
+                                                                                                                   // 300 - нахождение спрайта по оси x,
+                                                                                                                   // 850 - нахождение спрайта по оси y,
+                                                                                                                   // 170 - скорость с которой движется спрайт
     }
 
 
@@ -79,6 +84,8 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         drawThread = new DrawThread(getContext(), getHolder());
         drawThread.start();
+        Timer timer = new Timer();
+        timer.start();
     }
 
     @Override
@@ -89,6 +96,23 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
 
+    }
+    class Timer extends CountDownTimer{
+        public Timer() {
+            super(Integer.MAX_VALUE, timerInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            catSprite.update(1f * millisUntilFinished / 1000, 50); //последняя цифра отвечает за то, сколько спрайт будет двигатьтся, и в какую сторону
+                                                                   // (если отрицательное значение, то справа налево,
+                                                                   // если положительное значение, то слева направо)
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
     }
     class DrawThread extends Thread{
         SurfaceHolder surfaceHolder;
@@ -134,12 +158,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xg > (float)(canvas.getWidth() * 0.18) && xg < (float)(canvas.getWidth() * 0.3)){
                             forStatusHungry.setColor(Color.YELLOW);
                             canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба покормить питомца
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба покормить питомца
                         }
                         else {
                             forStatusHungry.setColor(Color.RED);
                             canvas.drawBitmap(feedmepls, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint);
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //питомец очень сильно хочет кушать
                         }
                         canvas.drawRect(0, (float) (canvas.getHeight() * 0.06), widthRect, (float) (canvas.getHeight() * 0.11), forStatusHungry); //отрисовка уровня состояния голода
 
@@ -150,12 +174,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xn > (float)(canvas.getWidth() * 0.18) && xn < (float)(canvas.getWidth() * 0.3)){
                             forStatusMood.setColor(Color.YELLOW);
                             canvas.drawBitmap(playWme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба развлечь питомца
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба развлечь питомца
                         }
                         else {
                             forStatusMood.setColor(Color.RED);
                             canvas.drawBitmap(playWmepls, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint);
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //у питомца совсем нет настроения
                         }
                         canvas.drawRect((float)(canvas.getWidth() * 0.332), (float) (canvas.getHeight() * 0.06), widthRect2, (float) (canvas.getHeight() * 0.11), forStatusMood); //отрисовка уровня состояния настроения
 
@@ -166,12 +190,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xu > (float)(canvas.getWidth() * 0.18) && xu < (float)(canvas.getWidth() * 0.3)){
                             forStatusTiredness.setColor(Color.YELLOW);
                             canvas.drawBitmap(wannaSleep, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint); //просьба положить питомца спать
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба положить питомца спать
                         }
                         else {
                             forStatusTiredness.setColor(Color.RED);
                             canvas.drawBitmap(iwantsleep, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.52), (int)(canvas.getHeight() * 0.2), (int)(canvas.getWidth() * 0.85), (int)(canvas.getHeight() * 0.35)), wallPaint);
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //питомец очень сильно хочет спать
                         }
                         canvas.drawRect((float)(canvas.getWidth() * 0.662), (float) (canvas.getHeight() * 0.06), widthRect3, (float) (canvas.getHeight() * 0.11), forStatusTiredness); //отрисовка уровня состояния усталости
 
@@ -193,8 +217,6 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         canvas.drawText("Спать", (float)(canvas.getWidth() * 0.785), (float)(canvas.getHeight() * 0.935), tooxt);
                         canvas.drawText("X", (float)(canvas.getWidth() * 0.915), (float)(canvas.getHeight() * 0.0455), backTOback);
 
-
-                        catSprite.update(0.05);
                         catSprite.draw(canvas);
 
                     } finally {
