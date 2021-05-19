@@ -1,5 +1,6 @@
 package com.example.projectic_dva_ne_trogat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     float xg = 0; //голод
     float xn = 0; //настроение
     float xu = 0; //усталость
+    Timer timer;
 
     Sprite catSprite;
 
@@ -84,8 +86,8 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         drawThread = new DrawThread(getContext(), getHolder());
         drawThread.start();
-        Timer timer = new Timer();
-        timer.start();
+        //timer = new Timer();
+        //timer.start();
     }
 
     @Override
@@ -98,15 +100,18 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
     }
     class Timer extends CountDownTimer{
+        private long curTime = 0;
         public Timer() {
             super(Integer.MAX_VALUE, timerInterval);
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            catSprite.update(1f * millisUntilFinished / 1000, 50); //последняя цифра отвечает за то, сколько спрайт будет двигатьтся, и в каком направлении
+            catSprite.update(1f * millisUntilFinished / 1000, -50); //последняя цифра отвечает за то, в каком направлении спрайт будет двигатьтся
                                                                    // (если отрицательное значение, то справа налево,
                                                                    // если положительное значение, то слева направо)
+           // canvas.drawText(String.valueOf(curTime / 1000), 300, 300, new Paint());
+            //curTime += timerInterval;
         }
 
         @Override
@@ -121,6 +126,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
         }
 
+        @SuppressLint("DefaultLocale")
         @Override
         public void run() {
             Paint wallPaint = new Paint();  wallPaint.setColor(Color.rgb(182, 231, 23));    wallPaint.setStyle(Paint.Style.FILL);
@@ -143,7 +149,15 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
             Paint forStatusTiredness = new Paint(); forStatusTiredness.setColor(Color.GREEN); forStatusTiredness.setStyle(Paint.Style.FILL); forStatusTiredness.setStrokeWidth(7); //цвет для состояния усталости
 
             boolean running = true;
+            double seconds = 0;
+            long millis = System.currentTimeMillis();
             while (running) {
+                seconds += 1.0 * (System.currentTimeMillis() - millis) / 1000;
+                //обновить (текущее время - прошлое текущее время)
+                catSprite.update(System.currentTimeMillis() - millis, -50);
+                //запомнить текущее время
+                millis = System.currentTimeMillis();
+
                 canvas = surfaceHolder.lockCanvas();
                 if (canvas != null) {
                     try {
@@ -218,6 +232,8 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         canvas.drawText("X", (float)(canvas.getWidth() * 0.915), (float)(canvas.getHeight() * 0.0455), backTOback);
 
                         catSprite.draw(canvas);
+
+                        canvas.drawText(String.format("%.2f", Math.floor(seconds)), 300, 300, tooxt);
 
                     } finally {
                         surfaceHolder.unlockCanvasAndPost(canvas);

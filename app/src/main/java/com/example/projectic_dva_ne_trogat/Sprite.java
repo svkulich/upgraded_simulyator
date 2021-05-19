@@ -14,14 +14,14 @@ public class Sprite{
     private ArrayList<ArrayList<Rect>> frames;
     private int frameWidth = 110;
     private int frameHeight = 200;
-    private int currentFrameX = 0;
-    private int currentFrameY = 0; //линия анимации (0 - идёт вправо, 1 - только для смерти, 2 - идёт влево)
-    private double frameTime = 1;
+    public int currentFrameX = 0;
+    public int currentFrameY = 2; //линия анимации (0 - идёт вправо, 1 - только для смерти, 2 - идёт влево)
+    public double frameTime = 1;
     public int size = 600;
     private double timeForCurrentFrame = 0;
 
-    private double x;
-    private double y;
+    public double x;
+    public double y;
 
     private double velocityX;
 
@@ -55,15 +55,25 @@ public class Sprite{
     public void update(double deltaTime, int ms){
         timeForCurrentFrame += deltaTime;
 
+        if (velocityX > 0){
+            currentFrameY = 2;
+        }else{
+            currentFrameY = 0;
+        }
+
         if (timeForCurrentFrame >= frameTime){
             currentFrameX = (currentFrameX + 1) % frames.get(currentFrameY).size();
             timeForCurrentFrame = 0;
         }
+
         x = x + velocityX * ms/1000.0;
     }
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(bitmap, frames.get(currentFrameY).get(currentFrameX),
                 new Rect((int)x, (int)y, (int)x + size, (int)y + size), new Paint());
+        if (x <= 0 || x >= canvas.getWidth() - size){
+            velocityX = -velocityX;
+        }
     }
 }
