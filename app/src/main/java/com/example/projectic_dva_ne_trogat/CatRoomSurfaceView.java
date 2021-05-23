@@ -172,12 +172,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xg > (float)(canvas.getWidth() * 0.18) && xg < (float)(canvas.getWidth() * 0.3)){
                             forStatusHungry.setColor(Color.YELLOW);
                             canvas.drawBitmap(feedme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба покормить питомца
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //просьба покормить питомца
                         }
                         else {
                             forStatusHungry.setColor(Color.RED);
                             canvas.drawBitmap(feedmepls, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //питомец очень сильно хочет кушать
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //питомец очень сильно хочет кушать
                         }
                         canvas.drawRect(0, (float) (canvas.getHeight() * 0.06), widthRect, (float) (canvas.getHeight() * 0.11), forStatusHungry); //отрисовка уровня состояния голода
 
@@ -188,12 +188,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xn > (float)(canvas.getWidth() * 0.18) && xn < (float)(canvas.getWidth() * 0.3)){
                             forStatusMood.setColor(Color.YELLOW);
                             canvas.drawBitmap(playWme, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба развлечь питомца
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //просьба развлечь питомца
                         }
                         else {
                             forStatusMood.setColor(Color.RED);
                             canvas.drawBitmap(playWmepls, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //у питомца совсем нет настроения
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //у питомца совсем нет настроения
                         }
                         canvas.drawRect((float)(canvas.getWidth() * 0.332), (float) (canvas.getHeight() * 0.06), widthRect2, (float) (canvas.getHeight() * 0.11), forStatusMood); //отрисовка уровня состояния настроения
 
@@ -204,12 +204,12 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
                         else if(xu > (float)(canvas.getWidth() * 0.18) && xu < (float)(canvas.getWidth() * 0.3)){
                             forStatusTiredness.setColor(Color.YELLOW);
                             canvas.drawBitmap(wannaSleep, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //просьба положить питомца спать
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //просьба положить питомца спать
                         }
                         else {
                             forStatusTiredness.setColor(Color.RED);
                             canvas.drawBitmap(iwantsleep, new Rect(0, 0, feedme.getWidth(), feedme.getHeight()),
-                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.35), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.5)), wallPaint); //питомец очень сильно хочет спать
+                                    new Rect((int)(canvas.getWidth() * 0.57), (int)(canvas.getHeight() * 0.33), (int)(canvas.getWidth() * 0.9), (int)(canvas.getHeight() * 0.48)), wallPaint); //питомец очень сильно хочет спать
                         }
                         canvas.drawRect((float)(canvas.getWidth() * 0.662), (float) (canvas.getHeight() * 0.06), widthRect3, (float) (canvas.getHeight() * 0.11), forStatusTiredness); //отрисовка уровня состояния усталости
 
@@ -233,7 +233,7 @@ public class CatRoomSurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
                         catSprite.draw(canvas);
 
-                        canvas.drawText(String.format("%.2f", Math.floor(seconds)), 300, 300, tooxt);
+                        canvas.drawText(String.format("%.0f", Math.floor(seconds)), (int)(canvas.getWidth() * 0.49), (int)(canvas.getHeight() * 0.04), tooxt);
 
                     } finally {
                         surfaceHolder.unlockCanvasAndPost(canvas);

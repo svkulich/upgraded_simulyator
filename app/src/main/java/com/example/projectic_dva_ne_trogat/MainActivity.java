@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,9 +23,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void fast(View view) {
+    public void fast(View view) throws IOException {
             Intent intent = new Intent(this, CatRoomActivity.class);
             startActivity(intent);
+            try {
+                FileInputStream bd = new FileInputStream("./test.txt");
+                bd.read();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     public void kill(View view) {
